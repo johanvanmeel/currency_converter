@@ -1,59 +1,112 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Application with DDEV
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is a Laravel-based application configured to run with [DDEV](https://ddev.readthedocs.io/).
 
-## About Laravel
+## Installation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Follow these steps to set up the application for the first time after pulling from Git:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository-url>
+    cd talk
+    ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2.  **Start DDEV:**
+    Make sure you have DDEV installed and running on your machine.
+    ```bash
+    ddev start
+    ```
 
-## Learning Laravel
+3.  **Install PHP dependencies:**
+    ```bash
+    ddev composer install
+    ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+4.  **Install Node dependencies and build assets:**
+    ```bash
+    ddev npm install
+    ddev npm run build
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+5.  **Generate application key:**
+    ```bash
+    ddev artisan key:generate
+    ```
 
-## Laravel Sponsors
+## Database Setup
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+To install or reset the database schema, run the following command:
 
-### Premium Partners
+```bash
+ddev artisan migrate:fresh
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+This will drop all existing tables and run all migrations from scratch.
 
-## Contributing
+## User Management
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+You can add a new user to the application using Laravel Tinker:
 
-## Code of Conduct
+1.  **Open Tinker:**
+    ```bash
+    ddev artisan tinker
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2.  **Create a user:**
+    ```php
+    \App\Models\User::create([
+        'name' => 'John Doe',
+        'email' => 'john@example.com',
+        'password' => Hash::make('password'),
+    ]);
+    ```
 
-## Security Vulnerabilities
+## IP Restriction Management
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+The application includes a middleware to restrict access based on IP addresses.
 
-## License
+### Adding an Allowed IP or Range
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+You can add an allowed IP address or a CIDR address range (e.g., `192.168.1.0/24`) using Artisan Tinker:
+
+1.  **Open Tinker:**
+    ```bash
+    ddev artisan tinker
+    ```
+
+2.  **Add an allowed IP:**
+    ```php
+    \App\Models\AllowedIp::create([
+        'ip_address' => '127.0.0.1',
+        'description' => 'Local development'
+    ]);
+    ```
+
+3.  **Add an IP range:**
+    ```php
+    \App\Models\AllowedIp::create([
+        'ip_address' => '192.168.1.0/24',
+        'description' => 'Internal network'
+    ]);
+    ```
+
+## Fetching Exchange Rates
+
+The application includes a command to fetch the latest exchange rates from FloatRates. To run it, use:
+
+```bash
+ddev artisan app:fetch-exchange-rates
+```
+
+## Middleware: RestrictIpAddress
+
+The `RestrictIpAddress` middleware ensures that only requests from authorized IP addresses can access certain parts of the application.
+
+### How it works:
+- It retrieves all allowed IP addresses and ranges from the `allowed_ips` database table.
+- It uses `Symfony\Component\HttpFoundation\IpUtils::checkIp` to validate the incoming request's IP address against the stored list.
+- **Single IPs:** Matches exact IP addresses (e.g., `127.0.0.1`).
+- **IP Ranges:** Supports CIDR notation (e.g., `192.168.1.0/24`), allowing you to authorize entire subnets.
+- If the `allowed_ips` table is empty, access is granted to everyone by default.
+- If there are entries in the table and the requester's IP does not match any of them, a `403 Forbidden` response is returned.
