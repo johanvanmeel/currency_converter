@@ -14,8 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  */
-class AllowedIp extends Model {
-
+class AllowedIp extends Model
+{
     /** @use HasFactory<\Database\Factories\AllowedIpFactory> */
     use HasFactory;
 
@@ -28,5 +28,4 @@ class AllowedIp extends Model {
         'ip_address',
         'description',
     ];
-
 }

@@ -7,14 +7,15 @@ use App\Models\ExchangeRate;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class CurrencyConverterController extends Controller {
-
+class CurrencyConverterController extends Controller
+{
     /**
      * Displays the currency converter index page.
      *
      * @return View
      */
-    public function index(): View {
+    public function index(): View
+    {
         $currencies = Currency::orderBy('code')->get();
 
         return view('currency.index', compact('currencies'));
@@ -28,7 +29,8 @@ class CurrencyConverterController extends Controller {
      *
      * @return View
      */
-    public function convert(Request $request): View {
+    public function convert(Request $request): View
+    {
         $request->validate([
             'currency_id' => 'required|exists:currencies,id',
             'amount' => 'required|numeric|min:0',
@@ -56,5 +58,4 @@ class CurrencyConverterController extends Controller {
 
         return view('currency.index', compact('currencies', 'conversions', 'fromCurrency', 'amount'));
     }
-
 }

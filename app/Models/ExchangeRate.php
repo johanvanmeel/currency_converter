@@ -17,8 +17,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read \App\Models\Currency $fromCurrency
  * @property-read \App\Models\Currency $toCurrency
  */
-class ExchangeRate extends Model {
-
+class ExchangeRate extends Model
+{
     /**
      * The attributes that are mass assignable.
      *
@@ -35,7 +35,8 @@ class ExchangeRate extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Currency, \App\Models\ExchangeRate>
      */
-    public function fromCurrency(): BelongsTo {
+    public function fromCurrency(): BelongsTo
+    {
         return $this->belongsTo(Currency::class, 'from_currency_id');
     }
 
@@ -44,7 +45,8 @@ class ExchangeRate extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo<\App\Models\Currency, \App\Models\ExchangeRate>
      */
-    public function toCurrency(): BelongsTo {
+    public function toCurrency(): BelongsTo
+    {
         return $this->belongsTo(Currency::class, 'to_currency_id');
     }
 
@@ -53,10 +55,10 @@ class ExchangeRate extends Model {
      *
      * @return array<string, string>
      */
-    protected function casts(): array {
+    protected function casts(): array
+    {
         return [
             'rate' => 'float',
         ];
     }
-
 }

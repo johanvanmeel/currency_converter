@@ -10,15 +10,16 @@ use Illuminate\Http\Request;
 /**
  * Controller for managing allowed IP addresses.
  */
-class IpRestrictionController extends Controller {
-
+class IpRestrictionController extends Controller
+{
     /**
      * Displays a listing of the allowed IP addresses.
      *
      * @return JsonResponse
      *   The JSON response.
      */
-    public function index(): JsonResponse {
+    public function index(): JsonResponse
+    {
         return response()->json(AllowedIp::all());
     }
 
@@ -31,7 +32,8 @@ class IpRestrictionController extends Controller {
      * @return JsonResponse
      *   The JSON response.
      */
-    public function store(Request $request): JsonResponse {
+    public function store(Request $request): JsonResponse
+    {
         $validated = $request->validate([
             'ip_address' => 'required|string',
             'description' => 'nullable|string|max:255',
@@ -54,10 +56,10 @@ class IpRestrictionController extends Controller {
      * @return JsonResponse
      *  The JSON response.
      */
-    public function destroy(AllowedIp $allowedIp): JsonResponse {
+    public function destroy(AllowedIp $allowedIp): JsonResponse
+    {
         $allowedIp->delete();
 
         return response()->json(['message' => 'IP address removed successfully.']);
     }
-
 }

@@ -26,4 +26,4 @@ Route::middleware(['auth', 'restrict-ip'])->prefix('admin')->name('admin.')->gro
     Route::delete('/ips/{allowedIp}', [IpRestrictionController::class, 'destroy'])->name('ips.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

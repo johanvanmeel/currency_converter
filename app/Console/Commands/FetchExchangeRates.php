@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-
 use App\Models\Currency;
 use App\Models\ExchangeRate;
 use Illuminate\Support\Facades\Http;
@@ -11,8 +10,8 @@ use Illuminate\Support\Facades\Http;
 /**
  * Fetches exchange rates from FloatRates.
  */
-class FetchExchangeRates extends Command {
-
+class FetchExchangeRates extends Command
+{
     /**
      * The name and signature of the console command.
      *
@@ -30,7 +29,8 @@ class FetchExchangeRates extends Command {
     /**
      * Execute the console command.
      */
-    public function handle(): void {
+    public function handle(): void
+    {
         $this->info('Fetching list of available currencies...');
 
         $usd = Currency::firstOrCreate(
@@ -64,7 +64,8 @@ class FetchExchangeRates extends Command {
      *
      * @return void
      */
-    private function fetchForCurrency($code): void {
+    private function fetchForCurrency($code): void
+    {
         $url = "https://www.floatrates.com/daily/{$code}.json";
         $response = Http::get($url);
 
@@ -92,10 +93,8 @@ class FetchExchangeRates extends Command {
                     ]
                 );
             }
-        }
-        else {
+        } else {
             $this->error("Failed to fetch rates for {$code}");
         }
     }
-
 }

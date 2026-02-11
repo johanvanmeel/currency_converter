@@ -16,8 +16,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read \Illuminate\Database\Eloquent\Collection<int,
  *     \App\Models\ExchangeRate> $exchangeRates
  */
-class Currency extends Model {
-
+class Currency extends Model
+{
     /**
      * The attributes that are mass assignable.
      *
@@ -33,8 +33,8 @@ class Currency extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany<\App\Models\ExchangeRate, \App\Models\Currency>
      */
-    public function exchangeRates(): HasMany {
+    public function exchangeRates(): HasMany
+    {
         return $this->hasMany(ExchangeRate::class, 'from_currency_id');
     }
-
 }
