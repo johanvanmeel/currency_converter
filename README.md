@@ -25,9 +25,9 @@ Follow these steps to set up the application for the first time after pulling fr
 
 4.  **Install Node dependencies and build assets:**
     ```bash
-    ddev npm install
-    ddev npm run build
+    ddev npm install && ddev npm run build
     ```
+    *Note: Running `ddev npm run build` is required to generate the Vite manifest. If you encounter a `ViteManifestNotFoundException`, ensure this step completed successfully.*
 
 5.  **Generate application key:**
     ```bash
@@ -99,6 +99,9 @@ The application includes a command to fetch the latest exchange rates from Float
 ddev artisan app:fetch-exchange-rates
 ```
 
+A cron job is configured to run this command every day at 06:00.
+See the console routes file (`routes/console.php`) for more information.
+
 ## Middleware: RestrictIpAddress
 
 The `RestrictIpAddress` middleware ensures that only requests from authorized IP addresses can access certain parts of the application.
@@ -110,3 +113,8 @@ The `RestrictIpAddress` middleware ensures that only requests from authorized IP
 - **IP Ranges:** Supports CIDR notation (e.g., `192.168.1.0/24`), allowing you to authorize entire subnets.
 - If the `allowed_ips` table is empty, access is granted to everyone by default.
 - If there are entries in the table and the requester's IP does not match any of them, a `403 Forbidden` response is returned.
+
+### Additional information
+- The application is running at https://currencyconverter.ddev.site
+- The dashboard is available at https://currencyconverter.ddev.site/admin.
+- To log in as a user, use the credentials from the `users` table.
