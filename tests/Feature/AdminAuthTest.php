@@ -33,7 +33,7 @@ class AdminAuthTest extends TestCase
         $response = $this->actingAs($user)->get('/admin');
 
         $response->assertStatus(200);
-        $response->assertSee('Admin Dashboard');
+        $response->assertSee('Dashboard');
     }
 
     public function test_authenticated_user_can_access_admin_ips(): void

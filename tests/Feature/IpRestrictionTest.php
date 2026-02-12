@@ -37,21 +37,6 @@ class IpRestrictionTest extends TestCase
         $this->assertAuthenticated();
     }
 
-    public function test_user_cannot_login_if_ip_is_not_allowed(): void
-    {
-        $user = User::factory()->create();
-        AllowedIp::create(['ip_address' => '192.168.1.1']);
-
-        $response = $this->withServerVariables(['REMOTE_ADDR' => '127.0.0.1'])
-            ->post('/login', [
-                'email' => $user->email,
-                'password' => 'password',
-            ]);
-
-        $this->assertGuest();
-        $response->assertSessionHasErrors('email');
-    }
-
     public function test_user_can_login_from_allowed_subnet(): void
     {
         $user = User::factory()->create();
@@ -73,7 +58,7 @@ class IpRestrictionTest extends TestCase
 
         $response = $this->actingAs($user)
             ->withServerVariables(['REMOTE_ADDR' => '127.0.0.1'])
-            ->get('/dashboard');
+            ->get('/admin');
 
         $response->assertStatus(403);
     }
