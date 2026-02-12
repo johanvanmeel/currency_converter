@@ -8,7 +8,7 @@ Follow these steps to set up the application for the first time after pulling fr
 
 1.  **Clone the repository:**
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/johanvanmeel/currency_converter.git
     cd talk
     ```
 
