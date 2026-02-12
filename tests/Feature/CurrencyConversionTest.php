@@ -11,7 +11,7 @@ class CurrencyConversionTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_currency_index_page_loads()
+    public function test_currency_index_page_loads(): void
     {
         $response = $this->get(route('currency.index'));
 
@@ -19,7 +19,7 @@ class CurrencyConversionTest extends TestCase
         $response->assertSee('Currency Converter');
     }
 
-    public function test_currency_conversion_works()
+    public function test_currency_conversion_works(): void
     {
         $usd = Currency::create(['code' => 'USD', 'name' => 'US Dollar']);
         $eur = Currency::create(['code' => 'EUR', 'name' => 'Euro']);
