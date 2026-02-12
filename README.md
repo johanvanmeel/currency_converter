@@ -119,3 +119,4 @@ The `RestrictIpAddress` middleware ensures that only requests from authorized IP
 - The application is running at https://currencyconverter.ddev.site
 - The dashboard is available at https://currencyconverter.ddev.site/admin.
 - To log in as a user, use the credentials from the `users` table.
+- Test can be run using `ddev artisan test`.
