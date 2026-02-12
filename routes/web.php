@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\IpRestrictionController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CurrencyConverterController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,9 @@ Route::middleware(['auth', 'restrict-ip'])->prefix('admin')->name('admin.')->gro
     Route::get('/ips', [IpRestrictionController::class, 'index'])->name('ips.index');
     Route::post('/ips', [IpRestrictionController::class, 'store'])->name('ips.store');
     Route::delete('/ips/{allowedIp}', [IpRestrictionController::class, 'destroy'])->name('ips.destroy');
+
+    // Users.
+    Route::resource('users', UserController::class)->except(['show']);
 });
 
 require __DIR__ . '/auth.php';

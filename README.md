@@ -8,8 +8,8 @@ Follow these steps to set up the application for the first time after pulling fr
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/johanvanmeel/currency_converter.git
-    cd talk
+    git clone https://github.com/johanvanmeel/currency_converter.git && 
+    cd currency_converter
     ```
 
 2.  **Start DDEV:**
@@ -25,7 +25,8 @@ Follow these steps to set up the application for the first time after pulling fr
 
 4.  **Install Node dependencies and build assets:**
     ```bash
-    ddev npm install && ddev npm run build
+    ddev npm install && 
+    ddev npm run build
     ```
     *Note: Running `ddev npm run build` is required to generate the Vite manifest. If you encounter a `ViteManifestNotFoundException`, ensure this step completed successfully.*
 
