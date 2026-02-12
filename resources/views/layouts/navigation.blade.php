@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                         {{ __('Users') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.ips.index')" :active="request()->routeIs('admin.ips.*')">
+                        {{ __('Allowed IPs') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -75,6 +78,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')">
                 {{ __('Users') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.ips.index')" :active="request()->routeIs('admin.ips.*')">
+                {{ __('Allowed IPs') }}
             </x-responsive-nav-link>
         </div>
 

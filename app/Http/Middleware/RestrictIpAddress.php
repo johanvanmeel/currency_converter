@@ -29,7 +29,7 @@ class RestrictIpAddress
         $allowedIps = AllowedIp::pluck('ip_address')->toArray();
 
         if (!empty($allowedIps) && !IpUtils::checkIp($request->ip(), $allowedIps)) {
-            return response()->json(['message' => 'Access denied from your IP address.'], 403);
+            return response()->json(['message' => 'Access denied from your IP address. Your IP is: ' . $request->ip()], 403);
         }
 
         return $next($request);

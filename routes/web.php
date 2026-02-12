@@ -22,9 +22,7 @@ Route::middleware(['auth', 'restrict-ip'])->prefix('admin')->name('admin.')->gro
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // IP Restrictions.
-    Route::get('/ips', [IpRestrictionController::class, 'index'])->name('ips.index');
-    Route::post('/ips', [IpRestrictionController::class, 'store'])->name('ips.store');
-    Route::delete('/ips/{allowedIp}', [IpRestrictionController::class, 'destroy'])->name('ips.destroy');
+    Route::resource('ips', IpRestrictionController::class);
 
     // Users.
     Route::resource('users', UserController::class)->except(['show']);
